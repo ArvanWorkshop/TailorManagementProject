@@ -7,28 +7,34 @@ from .forms import OrderForm
 from .filters import OrderFilter
 
 
+
 def home(request):
-    orders = Order.objects.all()
-    customers = Customer.objects.all()
+	customers = Customer.objects.all()
+	total_customers = customers.count()
 
-    total_customers = customers.count()
+	orders = Order.objects.all()
+	total_orders = orders.count()
+	delivered = orders.filter(status='Delivered').count()
+	pending = orders.filter(status='Pending').count()
 
-    total_orders = orders.count()
-    delivered = orders.filter(status='Delivered').count()
-    pending = orders.filter(status='Pending').count()
+	cuttingmasters = CuttingMaster.objects.all()
 
-    context = {'orders': orders, 'customers': customers,
-               'total_orders': total_orders, 'delivered': delivered,
-               'pending': pending}
+	context = {'orders': orders, 'customers': customers,
+			   'total_orders': total_orders, 'delivered': delivered,
+			   'pending': pending}
 
-    return render(request, 'accounts/dashboard.html', context)
+	return render(request, 'accounts/dashboard.html', context)
 
 def products(request):
+	a =20
 	products = Product.objects.all()
 
 	return render(request, 'accounts/products.html', {'products':products})
 
+
+
 def customer(request, pk_test):
+
 	customer = Customer.objects.get(id=pk_test)
 
 	orders = customer.order_set.all()
@@ -41,6 +47,47 @@ def customer(request, pk_test):
 	'myFilter':myFilter}
 	return render(request, 'accounts/customer.html',context)
 
+def employs(request):
+	cuttingmasters = CuttingMaster.objects.all()
+	sewingmasters = SewingMaster.objects.all()
+	subemploys = SubEmploy.objects.all()
+
+	total_cuttingmaster = cuttingmasters.count()
+	total_sewingmaster = sewingmasters.count()
+	total_subemploy = subemploys.count()
+	context = {
+		'cuttingmasters': cuttingmasters,
+		'sewingmasters' : sewingmasters,
+		'subemploys' : subemploys,
+		'total_cuttingmaster': total_cuttingmaster,
+		'total_sewingmaster': total_sewingmaster,
+		'total_subemploy': total_subemploy
+	}
+	return render(request, 'accounts/employs.html', context)
+
+def cuttingmaster(request, pk_cutting):
+	cuttingmaster = CuttingMaster.objects.get(id=pk_cutting)
+
+	context = {
+		'cuttingmaster':cuttingmaster
+	}
+	return render(request, 'accounts/cuttingmaster.html', context)
+
+def sewingmaster(request, pk_sewing):
+	sewingmaster = SewingMaster.objects.get(id=pk_sewing)
+
+	context = {
+		'sewingmaster':sewingmaster
+	}
+	return render(request, 'accounts/sewingmaster.html', context)
+
+def subemploy(request, pk_subem):
+	subemploy = SubEmploy.objects.get(id=pk_subem)
+
+	context = {
+		'subemploy':subemploy
+	}
+	return render(request, 'accounts/cuttingmaster.html', context)
 
 
 def createOrder(request, pk):
@@ -85,11 +132,3 @@ def deleteOrder(request, pk):
 
 
 
-
-
-##########################
-def cuttingmaster(request):
-    return HttpResponse("Customer")
-
-def tailor(request):
-    return HttpResponse("Customer")

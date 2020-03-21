@@ -12,6 +12,55 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+class CuttingMaster(models.Model):
+    CATEGORY = (
+        ('daily', 'daily'),
+        ('weekly', 'weekly'),
+        ('monthly', 'monthly')
+    )
+    name = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    selery_type = models.CharField(max_length=200, null=True, choices=CATEGORY)
+    selery_amount = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class SewingMaster(models.Model):
+    CATEGORY = (
+        ('daily', 'daily'),
+        ('weekly', 'weekly'),
+        ('monthly', 'monthly')
+    )
+    name = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    selery_type = models.CharField(max_length=200, null=True, choices=CATEGORY)
+    selery_amount = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class SubEmploy(models.Model):
+    CATEGORY = (
+        ('daily', 'daily'),
+        ('weekly', 'weekly'),
+        ('monthly', 'monthly')
+    )
+    name = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    selery_type = models.CharField(max_length=200, null=True, choices=CATEGORY)
+    selery_amount = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)
