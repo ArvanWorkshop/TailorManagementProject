@@ -15,15 +15,21 @@ def home(request):
 	orders = Order.objects.all()
 	total_orders = orders.count()
 	delivered = orders.filter(status='Delivered').count()
+	complete = orders.filter(status='Complete Order').count()
 	pending = orders.filter(status='Pending').count()
 	cuttingmaster = orders.filter(status='CuttingMaster').count()
+	sewingmaster = orders.filter(status='SewingMaster').count()
 
+	processing = pending + cuttingmaster + sewingmaster
 	cuttingmasters = CuttingMaster.objects.all()
 	print(cuttingmasters)
 
-	context = {'orders': orders, 'customers': customers,
-			   'total_orders': total_orders, 'delivered': delivered,
-			   'pending': pending, 'cuttingmaster': cuttingmaster}
+	context = {
+		'orders': orders, 'customers': customers,
+		'total_orders': total_orders, 'delivered': delivered,
+		'pending': pending, 'cuttingmaster': cuttingmaster,
+		'processing': processing, 'complete':complete
+		}
 
 	return render(request, 'accounts/dashboard.html', context)
 
@@ -134,6 +140,12 @@ def updateOrder(request, pk):
 
 	context = {'form':form}
 	return render(request, 'accounts/order_form.html', context)
+
+def viewOrder(request, pk):
+	order = Order.objects.get(id=pk)
+	context ={'item': order}
+	return render(request, 'accounts/order_view.html', context)
+
 
 def deleteOrder(request, pk):
 	order = Order.objects.get(id=pk)

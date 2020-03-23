@@ -1,0 +1,18 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+    <h1>Order Details</h1>
+    <br>
+    <div>
+    <p>Customer Name: {{ item.customer }}</p>
+    <p>Product: {{ item.product }}</p>
+    <p>Order Status: {{ item.status }}</p>
+    <p>CuttingMaster: {{ item.cuttingmaster }}</p>
+    <p>SewingMaster: {{ item.sewingmaster }}</p>
+    <p>SubEmploy: {{ item.subemploy }}</p>
+    <p>Order date: {{ item.date_created }}</p>
+    <p>Delivery Date: {{ item.delivery_date }}</p>
+
+    </div>
+
+{% endblock %}
