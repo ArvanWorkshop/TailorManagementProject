@@ -16,12 +16,14 @@ def home(request):
 	total_orders = orders.count()
 	delivered = orders.filter(status='Delivered').count()
 	pending = orders.filter(status='Pending').count()
+	cuttingmaster = orders.filter(status='CuttingMaster').count()
 
 	cuttingmasters = CuttingMaster.objects.all()
+	print(cuttingmasters)
 
 	context = {'orders': orders, 'customers': customers,
 			   'total_orders': total_orders, 'delivered': delivered,
-			   'pending': pending}
+			   'pending': pending, 'cuttingmaster': cuttingmaster}
 
 	return render(request, 'accounts/dashboard.html', context)
 
@@ -34,11 +36,12 @@ def products(request):
 
 
 def customer(request, pk_test):
-
 	customer = Customer.objects.get(id=pk_test)
 
 	orders = customer.order_set.all()
 	order_count = orders.count()
+
+
 
 	myFilter = OrderFilter(request.GET, queryset=orders)
 	orders = myFilter.qs
@@ -87,13 +90,18 @@ def subemploy(request, pk_subem):
 	context = {
 		'subemploy':subemploy
 	}
-	return render(request, 'accounts/cuttingmaster.html', context)
+	return render(request, 'accounts/subemploy.html', context)
 
 
 def createOrder(request, pk):
 	OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=10)
 	customer = Customer.objects.get(id=pk)
+	print(customer)
 	formset = OrderFormSet(queryset=Order.objects.none(),instance=customer)
+	print(Order.objects)
+	#orders = Order.objects.all()
+	#cuttingmaster = orders.filter(status='CuttingMaster')
+
 	#form = OrderForm(initial={'customer':customer})
 	if request.method == 'POST':
 		#print('Printing POST:', request.POST)
@@ -101,7 +109,14 @@ def createOrder(request, pk):
 		formset = OrderFormSet(request.POST, instance=customer)
 		if formset.is_valid():
 			formset.save()
+			a = Order.objects.last()
+			#b = a.filter(status="CuttingMaster")
+			print(a)
+
 			return redirect('/')
+
+
+
 
 	context = {'form':formset}
 	return render(request, 'accounts/order_form.html', context)

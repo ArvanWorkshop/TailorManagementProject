@@ -2,4 +2,14 @@
 
 {% block content %}
     <h1>Cutting Master</h1>
+    <br>
+       <div>
+    <p>Name: {{ cuttingmaster.name }}</p>
+    <p>Phone: {{ cuttingmaster.phone }}</p>
+    <p>Email: {{ cuttingmaster.email }}</p>
+    <p>Selery Type: {{ cuttingmaster.selery_type }}</p>
+    <p>Selery Amount: {{ cuttingmaster.selery_amount }}</p>
+    <p>Join date: {{ cuttingmaster.date_created }}</p>
+    </div>
+
 {% endblock %}

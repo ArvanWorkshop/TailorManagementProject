@@ -2,4 +2,14 @@
 
 {% block content %}
     <h1>Sewing Master</h1>
+    <br>
+    <div>
+    <p>Name: {{ sewingmaster.name }}</p>
+    <p>Phone: {{ sewingmaster.phone }}</p>
+    <p>Email: {{ sewingmaster.email }}</p>
+    <p>Selery Type: {{ sewingmaster.selery_type }}</p>
+    <p>Selery Amount: {{ sewingmaster.selery_amount }}</p>
+    <p>Join date: {{ sewingmaster.date_created }}</p>
+    </div>
+
 {% endblock %}

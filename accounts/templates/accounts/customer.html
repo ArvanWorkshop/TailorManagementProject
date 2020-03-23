@@ -57,9 +57,14 @@
 			<table class="table table-sm">
 				<tr>
 					<th>Product</th>
-					<th>Note</th>
+                    <th>Status</th>
+                    <th>CuttingMaster</th>
+                    <th>SewingMaster</th>
+                    <th>Other Employ</th>
+
 					<th>Date Orderd</th>
-					<th>Status</th>
+                    <th>Delivery Date</th>
+
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
@@ -68,9 +73,14 @@
 
 				<tr>
 					<td>{{order.product}}</td>
-					<td>{{order.note}}</td>
+                    <td>{{order.status}}</td>
+                    <td>{{ order.cuttingmaster }}</td>
+                    <td>{{ order.sewingmaster }}</td>
+                    <td>{{ order.subemploy }}</td>
+
 					<td>{{order.date_created}}</td>
-					<td>{{order.status}}</td>
+                    <td>{{order.delivery_date}}</td>
+
 					<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
 
 					<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>

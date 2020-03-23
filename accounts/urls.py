@@ -13,9 +13,8 @@ urlpatterns = [
 
     path('employs/', views.employs, name='employs'),
     path('cuttingmaster/<str:pk_cutting>/', views.cuttingmaster, name="cuttingmaster"),
-    path('sewingmaster/<str:pk_cutting>/', views.sewingmaster, name="sewingmaster"),
+    path('sewingmaster/<str:pk_sewing>/', views.sewingmaster, name="sewingmaster"),
     path('subemploy/<str:pk_subem>/', views.subemploy, name="subemploy"),
-
 
 
 ]

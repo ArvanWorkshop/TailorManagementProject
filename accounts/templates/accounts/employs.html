@@ -34,7 +34,7 @@
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="orders-pending">
 			  	<div class="card-header">
-			  		<h5 class="card-title">Sub Employ</h5>
+			  		<h5 class="card-title">Other Employ</h5>
 			  	</div>
 			  	<div class="card-body">
 			    	<h3 class="card-title">{{total_subemploy}}</h3>
@@ -60,7 +60,7 @@
 
 				{% for cuttingmaster in cuttingmasters %}
 					<tr>
-						<td><a class="btn btn-sm btn-info">View</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'cuttingmaster' cuttingmaster.id %}">View</a></td>
 						<td>{{cuttingmaster.name}}</td>
 						<td>{{cuttingmaster.phone}}</td>
 					</tr>
@@ -84,7 +84,7 @@
 
 				{% for sewingmaster in sewingmasters %}
 					<tr>
-						<td><a class="btn btn-sm btn-info">View</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'sewingmaster' sewingmaster.id %}">View</a></td>
 						<td>{{sewingmaster.name}}</td>
 						<td>{{sewingmaster.phone}}</td>
 					</tr>
@@ -95,20 +95,20 @@
 	</div>
 
         	<div class="col-md-4">
-		<h5>Sub Employs:</h5>
+		<h5>Other Employs:</h5>
 		<hr>
 		<div class="card card-body">
 			<a class="btn btn-primary  btn-sm btn-block" href="">Create New SubEmploy</a>
 			<table class="table table-sm">
 				<tr>
 					<th></th>
-					<th>CuttingMasters</th>
+					<th>Ohter Employ</th>
 					<th>Phone</th>
 				</tr>
 
 				{% for subemploy in subemploys %}
 					<tr>
-						<td><a class="btn btn-sm btn-info">View</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'subemploy' subemploy.id %}">View</a></td>
 						<td>{{subemploy.name}}</td>
 						<td>{{subemploy.phone}}</td>
 					</tr>
