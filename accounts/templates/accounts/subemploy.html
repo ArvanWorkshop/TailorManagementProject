@@ -2,14 +2,41 @@
 
 {% block content %}
     <h1>Other Employs</h1>
-    <br>
-       <div>
-    <p>Name: {{ subemploy.name }}</p>
-    <p>Phone: {{ subemploy.phone }}</p>
-    <p>Email: {{ subemploy.email }}</p>
-    <p>Selery Type: {{ subemploy.selery_type }}</p>
-    <p>Selery Amount: {{ subemploy.selery_amount }}</p>
-    <p>Join date: {{ subemploy.date_created }}</p>
-    </div>
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Profile</a>
+			<hr>
+			<h3 style="text-align: center">{{ subemploy.name }}</h3>
+			<hr>
+			<img class="profile-pic" src="{{subemploy.subemploy_pic.url}}" >
+
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+                <p>Join Date: {{ subemploy.date_created.date  }}</p>
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+
+		</div>
+	</div>
+<div>
+</div>
+</div>
 
 {% endblock %}

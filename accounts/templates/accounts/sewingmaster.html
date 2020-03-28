@@ -2,14 +2,40 @@
 
 {% block content %}
     <h1>Sewing Master</h1>
-    <br>
-    <div>
-    <p>Name: {{ sewingmaster.name }}</p>
-    <p>Phone: {{ sewingmaster.phone }}</p>
-    <p>Email: {{ sewingmaster.email }}</p>
-    <p>Selery Type: {{ sewingmaster.selery_type }}</p>
-    <p>Selery Amount: {{ sewingmaster.selery_amount }}</p>
-    <p>Join date: {{ sewingmaster.date_created }}</p>
-    </div>
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Profile</a>
+			<hr>
+			<h3 style="text-align: center">{{ sewingmaster.name }}</h3>
+			<hr>
+			<img class="profile-pic" src="{{ sewingmaster.sewingmaster_pic.url }}" >
+
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+                <p>Join Date: {{ sewingmaster.date_created }}</p>
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+		</div>
+	</div>
+</div>
+
+
 
 {% endblock %}

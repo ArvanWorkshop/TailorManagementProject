@@ -9,12 +9,7 @@
 
 			<form action="" method="POST">
 				{% csrf_token %}
-				{{ form.management_form }}
-				{% for field in form %}
-					{{field}}
-
-					<hr>
-				{% endfor %}
+                {{ form.as_p }}
 				
 				<input type="submit" name="Submit">
 			</form>
@@ -25,3 +20,17 @@
 
 
 {% endblock %}
+
+
+
+
+
+<!--
+				{{ form.management_form }}
+				{% for field in form %}
+					{{field}}
+
+					<hr>
+				{% endfor %}
+
+-->

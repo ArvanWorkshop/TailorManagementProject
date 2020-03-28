@@ -1,17 +1,64 @@
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.forms import inlineformset_factory
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+
 # Create your views here.
 from .models import *
-from .forms import OrderForm
+from .forms import *
 from .filters import OrderFilter
+from .decorators import unauthenticated_user, allowed_users, admin_only
 
 
+@unauthenticated_user
+def registerPage(request):
+	form = CreateUserForm()
+	if request.method == 'POST':
+		form = CreateUserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			username = form.cleaned_data.get('username')
 
+			messages.success(request, 'Account was created for ' + username)
+
+			return redirect('login')
+
+	context = {'form': form}
+	return render(request, 'accounts/register.html', context)
+
+
+@unauthenticated_user
+def loginPage(request):
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password =request.POST.get('password')
+
+		user = authenticate(request, username=username, password=password)
+
+		if user is not None:
+			login(request, user)
+			return redirect('home')
+		else:
+			messages.info(request, 'Username OR password is incorrect')
+
+	context = {}
+	return render(request, 'accounts/login.html', context)
+
+def logoutUser(request):
+	logout(request)
+	return redirect('login')
+
+
+@login_required(login_url='login')
+@admin_only
 def home(request):
 	customers = Customer.objects.all()
 	total_customers = customers.count()
-
 	orders = Order.objects.all()
 	total_orders = orders.count()
 	delivered = orders.filter(status='Delivered').count()
@@ -22,7 +69,6 @@ def home(request):
 
 	processing = pending + cuttingmaster + sewingmaster
 	cuttingmasters = CuttingMaster.objects.all()
-	print(cuttingmasters)
 
 	context = {
 		'orders': orders, 'customers': customers,
@@ -30,17 +76,53 @@ def home(request):
 		'pending': pending, 'cuttingmaster': cuttingmaster,
 		'processing': processing, 'complete':complete
 		}
-
 	return render(request, 'accounts/dashboard.html', context)
 
-def products(request):
-	a =20
-	products = Product.objects.all()
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def userPage(request):
+	orders = request.user.customer.order_set.all()
+
+	total_orders = orders.count()
+	complete = orders.filter(status='Complete Order').count()
+	pending = orders.filter(status='Pending').count()
+	cuttingmaster = orders.filter(status='CuttingMaster').count()
+	sewingmaster = orders.filter(status='SewingMaster').count()
+
+	processing = pending + cuttingmaster + sewingmaster
+
+	print('ORDERS:', orders)
+
+	context = {'orders':orders, 'total_orders':total_orders,
+	'complete':complete,'processing':processing}
+	return render(request, 'accounts/user.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def accountSettings(request):
+	customer = request.user.customer
+	form = CustomerForm(instance=customer)
+
+	if request.method == "POST":
+		form = CustomerForm(request.POST, request.FILES, instance=customer)
+		if form.is_valid():
+			form.save()
+
+	context = {'form':form}
+	return render(request, 'accounts/account_settings.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def products(request):
+	products = Product.objects.all()
 	return render(request, 'accounts/products.html', {'products':products})
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def customer(request, pk_test):
 	customer = Customer.objects.get(id=pk_test)
 
@@ -56,6 +138,9 @@ def customer(request, pk_test):
 	'myFilter':myFilter}
 	return render(request, 'accounts/customer.html',context)
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def employs(request):
 	cuttingmasters = CuttingMaster.objects.all()
 	sewingmasters = SewingMaster.objects.all()
@@ -74,31 +159,64 @@ def employs(request):
 	}
 	return render(request, 'accounts/employs.html', context)
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def cuttingmaster(request, pk_cutting):
 	cuttingmaster = CuttingMaster.objects.get(id=pk_cutting)
+	form = CuttingMasterForm(instance=cuttingmaster)
+
+	if request.method == "POST":
+		form = CuttingMasterForm(request.POST, request.FILES, instance=cuttingmaster)
+		if form.is_valid():
+			form.save()
 
 	context = {
-		'cuttingmaster':cuttingmaster
+		'cuttingmaster':cuttingmaster,
+		'form': form
 	}
 	return render(request, 'accounts/cuttingmaster.html', context)
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def sewingmaster(request, pk_sewing):
 	sewingmaster = SewingMaster.objects.get(id=pk_sewing)
+	form = SewingMasterForm(instance=sewingmaster)
+
+	if request.method == "POST":
+		form = SewingMasterForm(request.POST, request.FILES, instance=sewingmaster)
+		if form.is_valid():
+			form.save()
 
 	context = {
-		'sewingmaster':sewingmaster
+		'sewingmaster':sewingmaster,
+		'form': form,
 	}
 	return render(request, 'accounts/sewingmaster.html', context)
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def subemploy(request, pk_subem):
 	subemploy = SubEmploy.objects.get(id=pk_subem)
+	form = SubEmpolyForm(instance=subemploy)
+
+	if request.method == "POST":
+		form = SubEmpolyForm(request.POST, request.FILES, instance=subemploy)
+		if form.is_valid():
+			form.save()
+
 
 	context = {
-		'subemploy':subemploy
+		'subemploy':subemploy,
+		'form': form,
 	}
 	return render(request, 'accounts/subemploy.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def createOrder(request, pk):
 	OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=10)
 	customer = Customer.objects.get(id=pk)
@@ -121,12 +239,12 @@ def createOrder(request, pk):
 
 			return redirect('/')
 
-
-
-
 	context = {'form':formset}
 	return render(request, 'accounts/order_form.html', context)
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def updateOrder(request, pk):
 
 	order = Order.objects.get(id=pk)
@@ -141,12 +259,17 @@ def updateOrder(request, pk):
 	context = {'form':form}
 	return render(request, 'accounts/order_form.html', context)
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def viewOrder(request, pk):
 	order = Order.objects.get(id=pk)
 	context ={'item': order}
 	return render(request, 'accounts/order_view.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def deleteOrder(request, pk):
 	order = Order.objects.get(id=pk)
 	if request.method == "POST":
@@ -155,7 +278,4 @@ def deleteOrder(request, pk):
 
 	context = {'item':order}
 	return render(request, 'accounts/delete.html', context)
-
-
-
 
