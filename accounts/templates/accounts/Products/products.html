@@ -1,0 +1,42 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+		<br>
+    <div class="container">
+<div class="row mb-2">
+{% for i in products %}
+    <div class="col-md-6">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h3 class="mb-0">{{i.name}}</h3>
+          <div class="mb-1 text-muted">{{i.category}}</div>
+          <p>{{ i.description }}</p>
+          <b>Price: {{i.price}}</b>
+            {% if request.user.is_staff %}
+            <div>
+                          <a class="btn btn-sm btn-info" href="{% url 'view_product' i.id %}">View</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'update_product' i.id %}">Update</a>
+            <a class="btn btn-sm btn-danger" href="{% url 'delete_product' i.id %}">Delete</a>
+            </div>
+
+            </div>
+                {% else%}
+                            <div>
+                          <a class="btn btn-sm btn-info" href="{% url 'view_product' i.id %}">View</a>
+            <a class="btn btn-sm btn-primary" href="">Order</a>
+            </div>
+
+            </div>
+          {% endif %}
+
+        <div class="col-auto d-none d-lg-block">
+            <img class="bd-placeholder-img" src="{{ i.product_pic.url }}" width="250" height="250" >
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
+    </div>
+{% endblock content %}

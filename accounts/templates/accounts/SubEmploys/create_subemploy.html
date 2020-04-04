@@ -1,0 +1,58 @@
+{%  extends 'accounts/main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div class="row">
+    <div class="col-md-2">
+    </div>
+        <div class="col-md-8">
+<div class="card card-body">
+    <h2 style="text-align: center">Create a New Employ</h2>
+    <hr>
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+
+                <div class="form-group">
+                <label for="input">*Name</label>
+                {% render_field form.name class='form-control' placeholder='Enter You Name'%}
+                </div>
+
+                <div class="form-group">
+                <label for="input">*Email</label>
+                {% render_field form.email class='form-control' placeholder='you@email.com'%}
+                </div>
+
+
+                <div class="form-group">
+                <label for="input">*Phone</label>
+                {% render_field form.phone class='form-control' placeholder='01XXXXX'%}
+                </div>
+
+                <div class="form-group">
+                <label for="inputCompany">Image</label>
+                {% render_field form.subemploy_pic class='form-control-file' %}
+                </div>
+
+                <div class="row">
+                <div class="form-group col-md-6">
+                <label for="input">*Selery Amount</label>
+                {% render_field form.selery_amount class='form-control' placeholder=''%}
+                </div>
+
+
+                <div class="form-group col-md-6">
+                <label for="input">*Selery Type</label>
+                {% render_field form.selery_type class='form-control' placeholder='Enter You Product Name'%}
+                </div>
+                </div>
+
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+</div>
+    </div>
+    </div>
+
+
+{% endblock %}

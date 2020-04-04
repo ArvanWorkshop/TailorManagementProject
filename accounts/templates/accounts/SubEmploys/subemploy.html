@@ -1,0 +1,79 @@
+{%  extends 'accounts/main.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<style>
+	.profile-pic{
+		max-width:300px;
+		max-height:400px;
+		margin: 0 auto;
+		border-radius: 20%;
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-5">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Profile</a>
+			<hr>
+            <div style="text-align: center">
+			<h3>{{ subemploy.name }}</h3><b>Sub Employ</b><br>
+                Join Date: {{ subemploy.date_created.date }}
+                </div>
+			<hr>
+			<img class="profile-pic" src="{{subemploy.subemploy_pic.url}}" >
+
+		</div>
+	</div>
+	<div class="col-md-7">
+		<div class="card card-body">
+            <h3 style="text-align: center">Contact Information</h3>
+            <hr>
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+
+                <div class="form-group col-md-10">
+                <label for="input">*Name</label>
+                {% render_field form.name class='form-control' placeholder='Enter You Name'%}
+                </div>
+
+                <div class="form-group col-md-10">
+                <label for="input">*Email</label>
+                {% render_field form.email class='form-control' placeholder='you@email.com'%}
+                </div>
+
+
+                <div class="form-group col-md-10">
+                <label for="input">*Phone</label>
+                {% render_field form.phone class='form-control' placeholder='01XXXXX'%}
+                </div>
+
+                <div class="form-group col-md-10">
+                <label for="inputCompany">Image</label>
+                {% render_field form.subemploy_pic class='form-control-file' %}
+                </div>
+
+                <div class="row">
+                <div class="form-group col-md-6">
+                <label for="input">*Selery Amount</label>
+                {% render_field form.selery_amount class='form-control' placeholder=''%}
+                </div>
+
+
+                <div class="form-group col-md-4">
+                <label for="input">*Selery Type</label>
+                {% render_field form.selery_type class='form-control' placeholder='Enter You Product Name'%}
+                </div>
+                </div>
+
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+
+		</div>
+	</div>
+<div>
+</div>
+</div>
+
+{% endblock %}

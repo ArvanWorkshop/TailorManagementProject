@@ -9,7 +9,7 @@ local_settings.py
 #db.sqlite3
 /media
 /static_cdn
-#/static
+/static
 venv/
 env/
 .idea

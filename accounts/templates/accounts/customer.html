@@ -1,34 +1,38 @@
 {%  extends 'accounts/main.html' %}
 
 {% block content %}
+<style>
+	.profile-pic{
+		max-width: 300px;
+		max-height:300px;
+		margin: 0 auto;
+		border-radius: 10%;
+	}
+</style>
 
 	<br>
 
 <div class="row">
-	<div class="col-md">
+	<div class="col-md-4">
 		<div class="card card-body">
-			<h5>Customer:</h5>
+			<h3 style="text-align: center">{{ customer.name }}</h3>
 			<hr>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Customer</a>
+			<img class="profile-pic" src="{{customer.profile_pic.url}}" >
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="card card-body">
+			<h3 style="text-align: center">Contact Information</h3>
+			<hr>
+            <p><b>Username:</b> {{ customer.user }}</p>
+            <p><b>Email:</b> {{customer.email}}</p>
+			<p><b>Phone:</b> {{customer.phone}}</p>
+            <p><b>Join Date:</b> {{ customer.date_created.date }}</p>
+            <p><b>Total Order:</b> {{ order_count }}</p>
+            <br>
+            <a class="btn btn-outline-info  btn-sm btn-block" href="">Update Customer</a>
 			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'create_order' customer.id %}">Place Order</a>
 
-		</div>
-	</div>
-
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Contact Information</h5>
-			<hr>
-			<p>Email: {{customer.email}}</p>
-			<p>Phone: {{customer.phone}}</p>
-		</div>
-	</div>
-
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Total Orders</h5>
-			<hr>
-			<h1 style="text-align: center;padding: 10px">{{order_count}}</h1>
 		</div>
 	</div>
 </div>
@@ -78,15 +82,14 @@
                     <td>{{ order.sewingmaster }}</td>
                     <td>{{ order.subemploy }}</td>
 
-					<td>{{order.date_created}}</td>
-                    <td>{{order.delivery_date}}</td>
+					<td>{{order.date_created.date}}</td>
+                    <td>{{order.delivery_date.date}}</td>
 
 					<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
 
 					<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
 				</tr>
 				{% endfor %}
-
 			</table>
 		</div>
 	</div>

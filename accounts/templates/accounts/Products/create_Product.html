@@ -1,0 +1,55 @@
+{%  extends 'accounts/main.html' %}
+
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-2">
+
+    </div>
+    	<div class="col-md-8">
+		<div class="card card-body">
+            <h2 style="text-align: center">Create A New Product</h2>
+            <hr>
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+
+                <div class="form-group">
+                <label for="input">*Name</label>
+                {% render_field form.name class='form-control' placeholder='Enter You Product Name'%}
+                </div>
+
+                <div class="form-group">
+                <label for="input">*Price</label>
+                {% render_field form.price class='form-control' placeholder='Enter You Product Price'%}
+                </div>
+
+                <div class="form-group">
+                <label for="inputCompany">*Category</label>
+                {% render_field form.category class='form-control'%}
+                </div>
+
+                <div class="form-group">
+                <label for="input">*Description</label>
+                {% render_field form.description class='form-control'%}
+                </div>
+
+                <div class="form-group">
+                <label for="inputCompany">Image</label>
+                {% render_field form.product_pic class='form-control-file' %}
+                </div>
+
+                <div class="form-group">
+                <label for="inputCompany">*Tags</label>
+                {% render_field form.tags class='form-control'%}
+                </div>
+
+			<input class="btn btn-primary" type="submit" name="Update Information">
+
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,34 +1,60 @@
 {%  extends 'accounts/main.html' %}
 {% load static %}
+{% load widget_tweaks %}
+
 {% block content %}
 
 <style>
 	.profile-pic{
-		max-width: 200px;
-		max-height:200px;
+		max-width: 350px;
+		max-height:450px;
 		margin: 0 auto;
-		border-radius: 50%;
+		border-radius: 10%;
 	}
 </style>
 
 <br>
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-5">
 		<div class="card card-body">
 			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Profile</a>
 			<hr>
-			<h3 style="text-align: center">Account Settings</h3>
+            <div style="text-align: center">
+			<h3>{{ customer.user }}</h3>
+            Join Date: {{ customer.date_created.date }}
+            </div>
 			<hr>
 			<img class="profile-pic" src="{{request.user.customer.profile_pic.url}}" >
 
 		</div>
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-7">
 		<div class="card card-body">
+            <h3 style="text-align: center">Contract Information</h3>
 
 			<form method="POST" action="" enctype="multipart/form-data">
 				{% csrf_token %}
-				{{form.as_p}}
+
+                <div class="form-group">
+                <label for="input">*Name</label>
+                {% render_field form.name class='form-control' placeholder='Enter You Name'%}
+                </div>
+
+                <div class="form-group">
+                <label for="input">*Email</label>
+                {% render_field form.email class='form-control' placeholder='you@email.com'%}
+                </div>
+
+                <div class="form-group">
+                <label for="input">*Phone</label>
+                {% render_field form.phone class='form-control' placeholder='01XXXXX'%}
+                </div>
+
+                <div class="form-group">
+                <label for="input">*Image</label>
+                {% render_field form.profile_pic class='form-control-file' %}
+                </div>
+
 			<input class="btn btn-primary" type="submit" name="Update Information">
 			</form>
 		</div>

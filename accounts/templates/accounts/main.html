@@ -1,3 +1,11 @@
+{% url 'home' as home_url %}
+{% url 'employs' as employs_url %}
+{% url 'products' as products_url %}
+{% url 'create_product' as create_product_url %}
+{% url 'customers' as customers_url %}
+{% url 'account' as account_url %}
+{% url 'user-page' as user_url %}
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,27 +14,99 @@
 	<title>Tailor Management</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+      <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
 
 </head>
-<body>
+<body id="page-top">
+
+<div>
 	{%  include 'accounts/navbar.html' %}
-	<div class="container-fluid">
-	{% block content %}
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+    {% if request.user.is_staff %}
+      <li class="nav-item {% if request.path == home_url %} active {% endif %}">
+        <a class="nav-link" href="{{ home_url }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+        <li class="nav-item {% if request.path == employs_url %} active {% endif %}">
+        <a class="nav-link" href="{{ employs_url }}">Employs</a>
+      </li>
+                <li class="nav-item {% if request.path == customers_url %} active {% endif %}">
+        <a class="nav-link" href="{{ customers_url }}">Customers</a>
+      </li>
+
+      <li class="nav-item {% if request.path == products_url %} active {% endif %}">
+        <a class="nav-link" href="{{ products_url }}">Products</a>
+      </li>
+     <li class="nav-item {% if request.path == create_product_url %} active {% endif %}">
+        <a class="nav-link" href="{{ create_product_url }}">Create Product</a>
+      </li>
+
+            {% else %}
+       <li class="nav-item {% if request.path == user_url %} active {% endif %}">
+        <a class="nav-link" href="{{ user_url }}">Home</a>
+      </li>
+
+       <li class="nav-item {% if request.path == account_url %} active {% endif %}">
+        <a class="nav-link" href="{{ account_url }}">Account Settings</a>
+      </li>
+      <li class="nav-item {% if request.path == products_url %} active {% endif %}">
+        <a class="nav-link" href="{{ products_url }}">Products</a>
+      </li>
+
+        {% endif %}
+    </ul>
+
+    <!-- /.content-wrapper -->
+      <div class="container">
+          {% block content %}
+
+
+          {% endblock %}
+</div>
+  </div>
+  <!-- /#wrapper -->
+</div>
 
 
 
-	{% endblock %}
-    </div>
-	<hr>
-	<h5>Our footer</h5>
-	
 </body>
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'js/sb-admin.min.js' %}"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+  <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
 
 
 </html>

@@ -6,35 +6,29 @@
 
 <br>
 
-<div class="row">
-	<div class="col-md-4">
-		<h5>CUSTOMERS:</h5>
-		<hr>
+
+
+<div class="card mb-4">
+<div class="card-header"> ORDERS </div>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>
-			<table class="table table-sm">
-				<tr>
-					<th></th>
-					<th>Customer</th>
-					<th>Phone</th>
-				</tr>
 
-				{% for customer in customers %}
-					<tr>
-						<td><a class="btn btn-sm btn-info" href="{% url 'customer' customer.id %}">View</a></td>
-						<td>{{customer.name}}</td>
-						<td>{{customer.phone}}</td>
-					</tr>
-				{% endfor %}
+        <div class="table-responsive">
 
-			</table>
-		</div>
-	</div>
+           <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="dataTable_length">
+                    <label>Show
+                        <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                            <option value="10">10</option>
+                            <option value="25">25</option><option value="50">50</option><option value="100">100</option>
+                        </select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="dataTable_filter" class="dataTables_filter">
+            <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label>
+        </div>
+        </div>
+        </div>
+               <div class="row">
 
-	<div class="col-md-8">
-		<h5>ORDERS</h5>
-		<hr>
-		<div class="card card-body">
 
 			<table class="table table-sm">
 				<tr>
@@ -42,6 +36,7 @@
 					<th>Order Date</th>
                     <th>Delivery Date</th>
 					<th>Status</th>
+                    <th>Price</th>
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
@@ -52,17 +47,19 @@
 						<td>{{order.date_created.date}}</td>
                         <td>{{order.delivery_date.date}}</td>
 						<td>{{order.status}}</td>
+                        <td>{{ order.product.price }}</td>
 
 						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
 
 						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
 					</tr>
 				{% endfor %}
-            
+
 			</table>
 		</div>
-	</div>
-
+</div>
+</div>
+        </div>
 </div>
 
 {% endblock %}

@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col">
 		<div class="col-md">
-			<div class="card text-center text-white  mb-3" id="total-orders" style="background-color: #4cb4c7">
+			<div class="card text-center text-white  mb-3" id="total-orders" style="background-color: #3B5848">
 			  	<div class="card-header">
 			  		<h5 class="card-title">Cutting Master</h5>
 			  	</div>
@@ -19,7 +19,7 @@
 
 	<div class="col">
 		<div class="col-md">
-			<div class="card text-center text-white  mb-3" id="orders-delivered" style="background-color: #7abecc">
+			<div class="card text-center text-white  mb-3" id="orders-delivered" style="background-color: #3B5158">
 			  	<div class="card-header">
 			  		<h5 class="card-title">Sewing Master</h5>
 			  	</div>
@@ -32,7 +32,7 @@
 
 	<div class="col">
 		<div class="col-md">
-			<div class="card text-center text-white  mb-3" id="orders-pending" style="background-color: #7CD1C0">
+			<div class="card text-center text-white  mb-3" id="orders-pending" style="background-color: #3B3C58">
 			  	<div class="card-header">
 			  		<h5 class="card-title">Other Employ</h5>
 			  	</div>
@@ -50,7 +50,7 @@
 		<h5>Cutting Masters</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create New CuttingMaster</a>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_cuttingmaster' %}">Create New CuttingMaster</a>
 			<table class="table table-sm">
 				<tr>
 					<th></th>
@@ -74,7 +74,7 @@
 		<h5>Sewing Masters:</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create New SewingMaster</a>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_sewingmaster' %}">Create New SewingMaster</a>
 			<table class="table table-sm">
 				<tr>
 					<th></th>
@@ -98,7 +98,7 @@
 		<h5>Other Employs:</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create New SubEmploy</a>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_subemploy' %}">Create New SubEmploy</a>
 			<table class="table table-sm">
 				<tr>
 					<th></th>

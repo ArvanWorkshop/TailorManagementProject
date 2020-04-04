@@ -83,8 +83,9 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField(null=True)
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
-    description = models.CharField(max_length=200, null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    product_pic = models.ImageField(default="profile1.png", null=True, blank=True)
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
@@ -108,8 +109,8 @@ class Order(models.Model):
     cuttingmaster = models.ForeignKey(CuttingMaster, null=True, on_delete=models.SET_NULL)
     sewingmaster = models.ForeignKey(SewingMaster, null=True, on_delete=models.SET_NULL)
     subemploy = models.ForeignKey(SubEmploy, null=True, on_delete=models.SET_NULL)
-    status = models.CharField(max_length=200, null=True, choices=STATUS)
-    note = models.CharField(max_length=1000, null=True)
+    status = models.CharField(max_length=200, null=True, choices=STATUS, default='Pending')
+    note = models.CharField(max_length=1000, null=True, default='hello')
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     delivery_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True, null=True)
 
