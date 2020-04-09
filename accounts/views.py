@@ -97,7 +97,7 @@ def customers(request):
 def customer(request, pk_test):
 	customer = Customer.objects.get(id=pk_test)
 
-	orders = customer.order_set.all()
+
 	orders = customer.order_set.all()
 	order_count = orders.count()
 
